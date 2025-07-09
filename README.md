@@ -134,6 +134,28 @@ JOIN actores a ON p.id = a.pelicula_id;
 ```
 
 ---
+3️⃣ Proxies &amp; Control de Red 
+Implementar una estrategia robusta para evitar bloqueos:
+A. Uso de proxies rotativos (mínimo 3 IPs), configurados con retry/fallback automático.
+LOG:
+```
+2025-07-09 17:36:43,518 - INFO - Iniciando scraping...
+2025-07-09 17:36:47,633 - INFO - Request a https://www.imdb.com/es/chart/top/ con proxy: http://user:pass@proxy3.com:8080
+2025-07-09 17:36:57,668 - ERROR - ERROR - requests HTTPSConnectionPool(host='www.imdb.com', port=443): Max retries exceeded with url: /es/chart/top/ (Caused by ProxyError('Unable to connect to proxy', ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000002831C283650>, 'Connection to proxy3.com timed out. (connect timeout=10)')))
+2025-07-09 17:37:11,834 - INFO - Proxy http://user:pass@proxy3.com:8080 eliminado de la lista por fallo. Quedan 2 proxies.
+2025-07-09 17:37:11,835 - WARNING - Intento 1/5 fallido. Reintentando en 1.0s...
+2025-07-09 17:37:16,603 - INFO - Request a https://www.imdb.com/es/chart/top/ con proxy: http://user:pass@proxy1.com:8080
+2025-07-09 17:37:36,779 - ERROR - ERROR - requests HTTPSConnectionPool(host='www.imdb.com', port=443): Max retries exceeded with url: /es/chart/top/ (Caused by ProxyError('Unable to connect to proxy', ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000002831C25EA50>, 'Connection to proxy1.com timed out. (connect timeout=10)')))
+2025-07-09 17:37:36,779 - INFO - Proxy http://user:pass@proxy1.com:8080 eliminado de la lista por fallo. Quedan 1 proxies.
+2025-07-09 17:37:36,780 - WARNING - Intento 2/5 fallido. Reintentando en 2.0s...
+2025-07-09 17:37:38,790 - INFO - Request a https://www.imdb.com/es/chart/top/ con proxy: http://user:pass@proxy2.com:8080
+2025-07-09 17:37:58,828 - ERROR - ERROR - requests HTTPSConnectionPool(host='www.imdb.com', port=443): Max retries exceeded with url: /es/chart/top/ (Caused by ProxyError('Unable to connect to proxy', ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x000002831C298FD0>, 'Connection to proxy2.com timed out. (connect timeout=10)')))
+2025-07-09 17:37:58,828 - INFO - Proxy http://user:pass@proxy2.com:8080 eliminado de la lista por fallo. Quedan 0 proxies.
+2025-07-09 17:37:58,829 - WARNING - Intento 3/5 fallido. Reintentando en 4.0s...
+2025-07-09 17:38:02,838 - WARNING - Se agotaron los proxies disponibles. Intentando sin proxy...
+```
+
+---
 
 ## 📞 Contacto
 
