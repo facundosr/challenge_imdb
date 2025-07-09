@@ -20,13 +20,14 @@ class IMDbScraper():
     }
 
     def __init__(self):
-        self.rh = RequestHandler(self._HEADERS)
+        self.rh = RequestHandler(self._HEADERS, use_proxy=False)
         self.url_base = "https://www.imdb.com"
         self.chart_endpoint = "/es/chart/top/"
         self.imdb_api = "https://caching.graphql.imdb.com"
         self.chart_movie_list = list()
 
     def run(self):
+        logger.info("Iniciando scraping...")
         self._get_movies()
         self._export_csv()
         self._export_postgres()
@@ -65,7 +66,7 @@ class IMDbScraper():
             response = self.rh.get(f"{self.url_base}{self.chart_endpoint}")
             return BS(response.text, 'lxml')
         except Exception as e:
-            raise("No se pudo obtener el soup del html")
+            raise Exception("No se pudo obtener el soup del html")
 
     def _get_chart_list(self, soup):
         """
@@ -85,13 +86,13 @@ class IMDbScraper():
             chart_list = page_data['chartTitles']['edges']
             return chart_list
         except Exception as e:
-            raise("No se pudo obtener el top de contenidos")
+            raise Exception("No se pudo obtener el top de contenidos")
 
     def _get_title(self, movie):
         try:
             return movie['titleText']['text']
         except KeyError:
-            raise("No se pudo obtener el título")
+            raise Exception("No se pudo obtener el título")
 
     def _get_release_year(self, movie):
         try:
@@ -139,7 +140,7 @@ class IMDbScraper():
             json_ = response.json()
             return json_['data']['chartTitles']['edges']
         except Exception as e:
-            raise(f"Error: {e} - No se pudo obtener el diccionario de Cast")
+            raise Exception(f"Error: {e} - No se pudo obtener el diccionario de Cast")
 
     def _get_movie_cast(self, movie_id, all_cast):
         cast = []
