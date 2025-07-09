@@ -20,20 +20,25 @@ Este proyecto implementa un scraper en Python que extrae información de las 250
 - Estructura modular y orientada a objetos.
 - Patrón de diseño aplicado: **Factory** (RequestHandler y DBHandler abstraídos como servicios).
 
+
 ---
 
 ## 🗂️ Estructura del Proyecto
 
+```
 .
 ├── main.py
 ├── extract/
-│ └── scraper.py
+│   └── scraper.py
 ├── utils/
-│ ├── request_handler.py
-│ └── db_handler.py
+│   ├── request_handler.py
+│   └── db_handler.py
 ├── output/
-│ └── imdb_chart.csv
+│   └── imdb_chart.csv
 ├── requeriments.txt
+```
+
+---
 
 ---
 
@@ -67,7 +72,6 @@ CREATE TABLE peliculas (
     anio INT,
     calificacion FLOAT,
     duracion INT,
-    UNIQUE (titulo, anio)
 );
 
 CREATE TABLE actores (
