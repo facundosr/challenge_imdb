@@ -131,8 +131,6 @@ SELECT
 FROM peliculas p
 JOIN actores a ON p.id = a.pelicula_id;
 
--- 5. Índice sugerido para consultas por actor
-CREATE INDEX idx_nombre_actor ON actores(nombre);
 ```
 
 ---
@@ -140,7 +138,6 @@ CREATE INDEX idx_nombre_actor ON actores(nombre);
 ## 📞 Contacto
 
 Desarrollado por **Facundo Sosa**.  
-Proyecto técnico para desafío de scraping y modelado relacional.
 
 ---
 
